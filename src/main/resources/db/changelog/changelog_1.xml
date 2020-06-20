@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+
+    <changeSet id="1.1" author="diego">
+        <createTable schemaName="agenda" tableName="pessoas">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="nome" type="varchar(255)"/>
+            <column name="cpf" type="bigint"/>
+            <column name="data_emissao_rg" type="date"/>
+            <column name="rg_numero" type="varchar"/>
+            <column name="rg_orgao_emissor" type="varchar"/>
+            <column name="data_nascimento" type="date"/>
+            <column name="email" type="varchar(100)"/>
+            <column name="id_estados_civis" type="bigint"/>
+            <column name="nascionalidade" type="varchar(50)"/>
+            <column name="naturalidade" type="varchar(150)"/>
+            <column name="nome_mae" type="varchar(255)"/>
+            <column name="nome_pai" type="varchar(255)"/>
+            <column name="sexo" type="char(1)"/>
+            <column name="id_enderecos" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_alteracao" type="date"/>
+            <column name="data_criacao" type="date"/>
+            <column name="tipo" type="varchar(80)"/>
+        </createTable>
+        <createSequence sequenceName="seq_pessoas"
+                        schemaName="agenda" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>
