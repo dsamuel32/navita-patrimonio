@@ -9,17 +9,13 @@ public class PatrimonioBuilder {
 
     private Patrimonio patrimonio;
     private Marca marca;
-    private static PatrimonioBuilder builder;
 
     private PatrimonioBuilder() {
         this.patrimonio = new Patrimonio();
         this.marca = new Marca();
     }
     public static PatrimonioBuilder getInstance() {
-        if (builder == null) {
-            builder = new PatrimonioBuilder();
-        }
-        return builder;
+        return new PatrimonioBuilder();
     }
 
 

@@ -3,6 +3,7 @@ package br.com.navita.patrimonio.apresentacao;
 import br.com.navita.patrimonio.dominio.dto.FiltroPatrimonioDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
 import br.com.navita.patrimonio.dominio.dto.PatrimonioDTO;
+import br.com.navita.patrimonio.dominio.dto.RespostaDTO;
 import br.com.navita.patrimonio.service.PatrimonioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class PatrimoniosRestController {
     }
 
     @DeleteMapping("{id}")
-    public void apagar(@PathVariable("id") String id) {
-        this.patrimonioService.apagar(id);
+    public RespostaDTO apagar(@PathVariable("id") String id) {
+        return this.patrimonioService.apagar(id);
     }
 }

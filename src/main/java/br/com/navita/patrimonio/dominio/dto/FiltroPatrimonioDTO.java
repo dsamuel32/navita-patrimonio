@@ -7,7 +7,7 @@ public class FiltroPatrimonioDTO extends FiltroPaginacaoDTO {
     private String descricao;
 
     public String getNumeroTombo() {
-        if (isNotNull(this.numeroTombo)) {
+        if (this.isNotNull(this.numeroTombo)) {
             return this.numeroTombo;
         }
         return numeroTombo;
@@ -18,10 +18,7 @@ public class FiltroPatrimonioDTO extends FiltroPaginacaoDTO {
     }
 
     public String getNome() {
-        if (this.isNotNull(nome)) {
-            return this.nome;
-        }
-        return nome;
+        return this.upperCase(this.nome);
     }
 
     public void setNome(String nome) {
@@ -29,17 +26,11 @@ public class FiltroPatrimonioDTO extends FiltroPaginacaoDTO {
     }
 
     public String getDescricao() {
-        if (this.isNotNull(this.descricao)) {
-            return this.descricao.toUpperCase();
-        }
-        return descricao;
+        return this.upperCase(this.descricao);
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    private Boolean isNotNull(String valor) {
-        return valor != null;
-    }
 }

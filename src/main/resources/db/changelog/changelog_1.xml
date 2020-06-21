@@ -140,6 +140,14 @@
             <column name="id" value="1"/>
             <column name="descricao" value="ADM"/>
         </insert>
+        <insert schemaName="patrimonio" tableName="permissao">
+            <column name="id" value="2"/>
+            <column name="descricao" value="OPERADOR"/>
+        </insert>
+        <insert schemaName="patrimonio" tableName="permissao">
+            <column name="id" value="3"/>
+            <column name="descricao" value="GERENTE"/>
+        </insert>
     </changeSet>
     <changeSet id="1.9" author="diego">
         <insert schemaName="patrimonio" tableName="usuario_permissao">

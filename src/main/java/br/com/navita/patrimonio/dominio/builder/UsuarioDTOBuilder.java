@@ -11,7 +11,6 @@ public class UsuarioDTOBuilder {
 
     private UsuarioDTO usuarioDTO;
     private Set<PermissaoDTO> permissoes;
-    private static UsuarioDTOBuilder builder;
 
     private UsuarioDTOBuilder() {
         this.usuarioDTO = new UsuarioDTO();
@@ -19,12 +18,13 @@ public class UsuarioDTOBuilder {
     }
 
     public static UsuarioDTOBuilder getInstance() {
-        if (builder == null) {
-            builder = new UsuarioDTOBuilder();
-        }
-        return builder;
+        return new UsuarioDTOBuilder();
     }
 
+    public UsuarioDTOBuilder id(Long id) {
+        this.usuarioDTO.setId(id);
+        return this;
+    }
     public UsuarioDTOBuilder nome(String nome) {
         this.usuarioDTO.setNome(nome);
         return this;

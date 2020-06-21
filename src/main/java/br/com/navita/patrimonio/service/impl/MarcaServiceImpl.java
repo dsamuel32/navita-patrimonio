@@ -3,6 +3,7 @@ package br.com.navita.patrimonio.service.impl;
 import br.com.navita.patrimonio.dominio.dto.FiltroMarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.MarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
+import br.com.navita.patrimonio.dominio.dto.RespostaDTO;
 import br.com.navita.patrimonio.dominio.entidade.Marca;
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
@@ -34,7 +35,7 @@ public class MarcaServiceImpl implements MarcaService {
     @Override
     public PaginacaoDTO<MarcaDTO> recuperar(FiltroMarcaDTO filtroMarcaDTO) {
         Page<MarcaDTO> page = this.marcaRepository.recuperar(filtroMarcaDTO.getId(), filtroMarcaDTO.getNome(), filtroMarcaDTO.pageable());
-        return new PaginacaoDTO<MarcaDTO>(page.getPageable().getPageNumber(), page.getTotalElements(), page.getContent());
+        return new PaginacaoDTO<>(page.getPageable().getPageNumber(), page.getTotalElements(), page.getContent());
     }
 
     @Override
@@ -52,9 +53,10 @@ public class MarcaServiceImpl implements MarcaService {
     }
 
     @Override
-    public void apagar(Long id) {
+    public RespostaDTO apagar(Long id) {
         try {
             this.marcaRepository.deleteById(id);
+            return new RespostaDTO("Marca apagada com sucesso.");
         } catch (DataIntegrityViolationException e) {
             throw new RegistroNaoPodeSerApagadoException("A marca não pode ser apagada");
         }

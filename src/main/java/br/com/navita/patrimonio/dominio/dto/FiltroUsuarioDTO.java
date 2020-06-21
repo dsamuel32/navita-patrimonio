@@ -1,9 +1,10 @@
 package br.com.navita.patrimonio.dominio.dto;
 
-public class FiltroMarcaDTO extends FiltroPaginacaoDTO {
+public class FiltroUsuarioDTO extends FiltroPaginacaoDTO {
 
     private Long id;
     private String nome;
+    private String email;
 
     public Long getId() {
         return id;
@@ -19,6 +20,14 @@ public class FiltroMarcaDTO extends FiltroPaginacaoDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return this.upperCase(this.email);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

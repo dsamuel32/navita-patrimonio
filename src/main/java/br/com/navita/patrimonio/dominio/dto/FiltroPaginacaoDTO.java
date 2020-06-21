@@ -37,4 +37,15 @@ public abstract class FiltroPaginacaoDTO {
     public void setOrdenacao(Sort.Direction ordenacao) {
         this.ordenacao = ordenacao;
     }
+
+    protected String upperCase(String valor) {
+        if (this.isNotNull(valor)) {
+            return valor.toUpperCase();
+        }
+        return valor;
+    }
+
+    protected Boolean isNotNull(String valor) {
+        return valor != null;
+    }
 }

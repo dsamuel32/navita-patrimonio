@@ -4,6 +4,7 @@ import br.com.navita.patrimonio.dominio.builder.PatrimonioBuilder;
 import br.com.navita.patrimonio.dominio.dto.FiltroPatrimonioDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
 import br.com.navita.patrimonio.dominio.dto.PatrimonioDTO;
+import br.com.navita.patrimonio.dominio.dto.RespostaDTO;
 import br.com.navita.patrimonio.dominio.entidade.Marca;
 import br.com.navita.patrimonio.dominio.entidade.Patrimonio;
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
@@ -66,8 +67,9 @@ public class PatrimonioServiceImpl implements PatrimonioService {
     }
 
     @Override
-    public void apagar(String numeroTombo) {
+    public RespostaDTO apagar(String numeroTombo) {
         this.patrimonioRepository.deleteById(numeroTombo);
+        return new RespostaDTO("Ptrimonio apagado com sucesso.");
     }
 
 }

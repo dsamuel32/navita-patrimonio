@@ -34,16 +34,16 @@ public class Usuario implements UserDetails {
     private String nome;
 
     @Column(name = "account_non_expired")
-    private Boolean accountNonExpired;
+    private Boolean accountNonExpired = true;
 
     @Column(name = "account_non_locked")
-    private Boolean accountNonLocked;
+    private Boolean accountNonLocked = true;
 
     @Column(name = "credentials_non_expired")
-    private Boolean credentialsNonExpired;
+    private Boolean credentialsNonExpired = true;
 
     @Column(name = "enabled")
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
@@ -53,6 +53,18 @@ public class Usuario implements UserDetails {
 
     public Usuario() {
         this.permissoes = new HashSet<>();
+    }
+
+    public Usuario(Long id,
+                   String email,
+                   String password,
+                   String nome,
+                   Set<Permissao> permissoes) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.nome = nome;
+        this.permissoes = permissoes;
     }
 
     public Long getId() {

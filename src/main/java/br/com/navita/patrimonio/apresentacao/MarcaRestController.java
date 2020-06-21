@@ -3,6 +3,7 @@ package br.com.navita.patrimonio.apresentacao;
 import br.com.navita.patrimonio.dominio.dto.FiltroMarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.MarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
+import br.com.navita.patrimonio.dominio.dto.RespostaDTO;
 import br.com.navita.patrimonio.service.MarcaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,8 +42,8 @@ public class MarcaRestController {
     }
 
     @DeleteMapping("{id}")
-    public void apagar(@PathVariable("id") Long id) {
-        this.marcaService.apagar(id);
+    public RespostaDTO apagar(@PathVariable("id") Long id) {
+        return this.marcaService.apagar(id);
     }
 
 }
