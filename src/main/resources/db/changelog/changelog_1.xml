@@ -52,4 +52,100 @@
         </sql>
     </changeSet>
 
+    <changeSet id="1.4" author="diego">
+        <createTable tableName="usuario" schemaName="patrimonio">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="account_non_expired" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="account_non_locked" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="credentials_non_expired" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="enabled" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint constraintName="uk_user_name"
+                             schemaName="patrimonio"
+                             columnNames="user_name"
+                             tableName="usuario"/>
+    </changeSet>
+
+    <changeSet id="1.5" author="diego">
+        <createTable tableName="permissao" schemaName="patrimonio">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.6" author="diego">
+        <createTable tableName="usuario_permissao" schemaName="patrimonio">
+            <column name="id_usuario" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="id_permissao" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id_usuario, id_permissao"
+                       constraintName="pk_usuario_permissao"
+                       schemaName="patrimonio"
+                       tableName="usuario_permissao"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_usuario"
+                                 baseTableName="usuario_permissao"
+                                 constraintName="fk_usuario_permissao"
+                                 referencedColumnNames="id"
+                                 referencedTableName="usuario"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_permissao"
+                                 baseTableName="usuario_permissao"
+                                 constraintName="fk_usuario_permissao_permissao"
+                                 referencedColumnNames="id"
+                                 referencedTableName="permissao"/>
+    </changeSet>
+
+
+    <changeSet id="1.7" author="diego">
+        <insert schemaName="patrimonio" tableName="usuario">
+            <column name="user_name" value="teste@teste.com"/>
+            <column name="nome" value="teste"/>
+            <column name="password" value="123"/>
+            <column name="account_non_expired" valueBoolean="true"/>
+            <column name="account_non_locked" valueBoolean="true"/>
+            <column name="credentials_non_expired" valueBoolean="true"/>
+            <column name="enabled" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1.8" author="diego">
+        <insert schemaName="patrimonio" tableName="permissao">
+            <column name="id" value="1"/>
+            <column name="descricao" value="ADM"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1.9" author="diego">
+        <insert schemaName="patrimonio" tableName="usuario_permissao">
+            <column name="id_usuario" value="1"/>
+            <column name="id_permissao" value="1"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

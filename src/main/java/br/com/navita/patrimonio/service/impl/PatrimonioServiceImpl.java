@@ -1,23 +1,19 @@
 package br.com.navita.patrimonio.service.impl;
 
+import br.com.navita.patrimonio.dominio.builder.PatrimonioBuilder;
 import br.com.navita.patrimonio.dominio.dto.FiltroPatrimonioDTO;
-import br.com.navita.patrimonio.dominio.dto.MarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
 import br.com.navita.patrimonio.dominio.dto.PatrimonioDTO;
 import br.com.navita.patrimonio.dominio.entidade.Marca;
 import br.com.navita.patrimonio.dominio.entidade.Patrimonio;
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
-import br.com.navita.patrimonio.exception.ObjetoDublicadoException;
 import br.com.navita.patrimonio.repository.PatrimonioRepository;
 import br.com.navita.patrimonio.service.PatrimonioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
-
-import java.util.UUID;
 
 @Service
 public class PatrimonioServiceImpl implements PatrimonioService {
@@ -42,7 +38,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
                                                                        filtroPatrimonioDTO.getNome(),
                                                                        filtroPatrimonioDTO.getDescricao(),
                                                                        filtroPatrimonioDTO.pageable());
-        return new PaginacaoDTO<PatrimonioDTO>(page.getPageable().getPageNumber(),
+        return new PaginacaoDTO<>(page.getPageable().getPageNumber(),
                                                page.getTotalElements(),
                                                page.getContent());
     }
@@ -50,15 +46,12 @@ public class PatrimonioServiceImpl implements PatrimonioService {
     @Override
     public PatrimonioDTO salvar(PatrimonioDTO patrimonioDTO) {
 
-        String numeroTombo = patrimonioDTO.getNumeroTombo();
-        if (patrimonioDTO.getNumeroTombo() == null) {
-            numeroTombo = UUID.randomUUID().toString();
-        }
-
-        Patrimonio patrimonio = new Patrimonio(numeroTombo,
-                                               patrimonioDTO.getNome(),
-                                               patrimonioDTO.getDescricao(),
-                                               new Marca(patrimonioDTO.getMarca().getId()));
+        Patrimonio patrimonio = PatrimonioBuilder.getInstance()
+                                                 .numeroTombo(patrimonioDTO.getNumeroTombo())
+                                                 .nome(patrimonioDTO.getNome())
+                                                 .descricao(patrimonioDTO.getDescricao())
+                                                 .idMarca(patrimonioDTO.getMarca().getId())
+                                                 .build();
         try {
             patrimonio = this.patrimonioRepository.save(patrimonio);
             Marca marca = patrimonio.getMarca();
