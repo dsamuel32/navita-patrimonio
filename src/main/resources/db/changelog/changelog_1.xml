@@ -26,9 +26,15 @@
             <column name="numero_tombo" type="varchar(100)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="nome" type="varchar(100)"/>
-            <column name="descricao" type="varchar(255)"/>
-            <column name="id_marca" type="bigint"/>
+            <column name="nome" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_marca" type="bigint">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addForeignKeyConstraint
                 baseTableName="patrimonio"

@@ -7,6 +7,7 @@ import br.com.navita.patrimonio.dominio.entidade.Marca;
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
 import br.com.navita.patrimonio.exception.ObjetoDublicadoException;
+import br.com.navita.patrimonio.exception.RegistroNaoPodeSerApagadoException;
 import br.com.navita.patrimonio.repository.MarcaRepository;
 import br.com.navita.patrimonio.service.MarcaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,12 @@ public class MarcaServiceImpl implements MarcaService {
 
     @Override
     public void apagar(Long id) {
-        this.marcaRepository.deleteById(id);
+        try {
+            this.marcaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RegistroNaoPodeSerApagadoException("A marca não pode ser apagada");
+        }
+
     }
 
 }

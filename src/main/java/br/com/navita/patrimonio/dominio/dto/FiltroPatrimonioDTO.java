@@ -1,22 +1,15 @@
 package br.com.navita.patrimonio.dominio.dto;
 
-public class PatrimonioDTO {
+public class FiltroPatrimonioDTO extends FiltroPaginacaoDTO {
 
     private String numeroTombo;
     private String nome;
     private String descricao;
-    private MarcaDTO marca;
-
-    public PatrimonioDTO() { }
-
-    public PatrimonioDTO(String numeroTombo, String nome, String descricao, Long idMarca, String nomeMarca) {
-        this.numeroTombo = numeroTombo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.marca = new MarcaDTO(idMarca, nomeMarca);
-    }
 
     public String getNumeroTombo() {
+        if (isNotNull(this.numeroTombo)) {
+            return this.numeroTombo;
+        }
         return numeroTombo;
     }
 
@@ -25,6 +18,9 @@ public class PatrimonioDTO {
     }
 
     public String getNome() {
+        if (this.isNotNull(nome)) {
+            return this.nome;
+        }
         return nome;
     }
 
@@ -33,6 +29,9 @@ public class PatrimonioDTO {
     }
 
     public String getDescricao() {
+        if (this.isNotNull(this.descricao)) {
+            return this.descricao.toUpperCase();
+        }
         return descricao;
     }
 
@@ -40,11 +39,7 @@ public class PatrimonioDTO {
         this.descricao = descricao;
     }
 
-    public MarcaDTO getMarca() {
-        return marca;
-    }
-
-    public void setMarca(MarcaDTO marca) {
-        this.marca = marca;
+    private Boolean isNotNull(String valor) {
+        return valor != null;
     }
 }
