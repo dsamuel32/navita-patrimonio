@@ -69,7 +69,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
     @Override
     public RespostaDTO apagar(String numeroTombo) {
         this.patrimonioRepository.deleteById(numeroTombo);
-        return new RespostaDTO("Ptrimonio apagado com sucesso.");
+        return new RespostaDTO("Patrimonio apagado com sucesso.");
     }
 
 }

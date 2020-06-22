@@ -17,9 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
-import javax.validation.ConstraintViolationException;
-import java.util.Set;
-
 @Service
 public class MarcaServiceImpl implements MarcaService {
 
