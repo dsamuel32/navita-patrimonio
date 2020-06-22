@@ -1,6 +1,6 @@
 # Teste Navita Controle de Patrimônio
 
-Tecnologias Utilizadas
+#### Tecnologias Utilizadas
 - Spring Boot
 - Spring Security
 - Spring Security OAuth
@@ -13,11 +13,12 @@ Tecnologias Utilizadas
 
 ## Instruções
 
-#### Executar o comando para criar o container do Postgresql
-
+#### Criar o container do Postgresql
+- Acessar o diretorio docker/postgres e executar o comando abaixo
 ```
 docker-compose up
 ```
+- Obs: O schema será criado na criação do container e tabelas do banco de dados serão criadas através do Liquibase. 
 
 #### Executar o build do projeto
 
@@ -49,7 +50,8 @@ curl -X POST -vu testjwtclientid:XY7kmzoNzl100  http://localhost:8080/patrimonio
 - Cadastro de Usuários
 
 ### Endereço da documentação das APIs
-```
-ADD SWAGGER
-```
+- Url Swagger
+    ```
+    http://localhost:8080/patrimonio/api/swagger-ui.html
+    ```
 
