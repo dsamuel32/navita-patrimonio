@@ -41,3 +41,15 @@ curl -X POST -vu testjwtclientid:XY7kmzoNzl100  http://localhost:8080/patrimonio
 	"jti":"012dca03-0f17-4c18-a5cd-1592ae5df4cd"
 }
 ```
+
+#### Serviços disponibilizados
+
+- Cadastro de Marcas
+- Cadastro de Patrimônios
+- Cadastro de Usuários
+
+### Endereço da documentação das APIs
+```
+ADD SWAGGER
+```
+
