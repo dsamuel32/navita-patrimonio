@@ -40,12 +40,16 @@ public class PatrimonioServiceImpl implements PatrimonioService {
                                                                        filtroPatrimonioDTO.getDescricao(),
                                                                        filtroPatrimonioDTO.pageable());
         return new PaginacaoDTO<>(page.getPageable().getPageNumber(),
-                                               page.getTotalElements(),
-                                               page.getContent());
+                                  page.getTotalElements(),
+                                  page.getContent());
     }
 
     @Override
     public PatrimonioDTO salvar(PatrimonioDTO patrimonioDTO) {
+
+        if (this.isNumeroTomboAlterado(patrimonioDTO.getNumeroTombo())) {
+            throw new CamposInvalidosException("O campo número do tombo não pode ser alterado");
+        }
 
         Patrimonio patrimonio = PatrimonioBuilder.getInstance()
                                                  .numeroTombo(patrimonioDTO.getNumeroTombo())
@@ -64,6 +68,13 @@ public class PatrimonioServiceImpl implements PatrimonioService {
         } catch (TransactionSystemException e) {
             throw new CamposInvalidosException(e);
         }
+    }
+
+    private Boolean isNumeroTomboAlterado(String numeroTombo) {
+        if (numeroTombo == null) {
+            return false;
+        }
+        return !this.patrimonioRepository.findById(numeroTombo).isPresent();
     }
 
     @Override

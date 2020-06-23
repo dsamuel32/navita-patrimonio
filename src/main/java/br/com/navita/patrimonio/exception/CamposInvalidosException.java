@@ -8,6 +8,12 @@ public class CamposInvalidosException extends RuntimeException {
 
     private List<String> erros;
 
+    public CamposInvalidosException(String mensagem) {
+        super(mensagem);
+        this.erros = new ArrayList<>();
+        this.erros.add(mensagem);
+    }
+
     public CamposInvalidosException(Throwable cause) {
         this.erros = new ArrayList<>();
         ConstraintViolationException ex = (ConstraintViolationException) cause.getCause().getCause();

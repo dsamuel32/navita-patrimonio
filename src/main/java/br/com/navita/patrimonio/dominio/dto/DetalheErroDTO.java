@@ -1,17 +1,18 @@
 package br.com.navita.patrimonio.dominio.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetalheErroDTO {
 
     private LocalDateTime localDateTime;
-    private String mensagem;
     private List<String> erros;
 
     public DetalheErroDTO(LocalDateTime localDateTime, String mensagem) {
         this.localDateTime = localDateTime;
-        this.mensagem = mensagem;
+        this.erros = new ArrayList<>();
+        this.erros.add(mensagem);
     }
 
     public DetalheErroDTO(LocalDateTime localDateTime, List<String> erros) {
@@ -25,14 +26,6 @@ public class DetalheErroDTO {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
-    }
-
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
     }
 
     public List<String> getErros() {

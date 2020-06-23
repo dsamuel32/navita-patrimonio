@@ -66,6 +66,7 @@ public class PatrimonioServiceImplTest {
         when(this.patrimonioRepository.findById(anyString())).thenReturn(Optional.of(this.patrimonio));
         when(this.patrimonioRepository.save(any(Patrimonio.class))).thenReturn(this.patrimonio);
         when(this.patrimonioRepository.recuperar(anyString(), anyString(), anyString(), any(Pageable.class))).thenReturn(this.page);
+        when(this.patrimonioRepository.findById(anyString())).thenReturn(Optional.of(this.patrimonio));
     }
 
     @Mock
@@ -104,10 +105,24 @@ public class PatrimonioServiceImplTest {
 
     @Test
     public void salvar() {
+        PatrimonioDTO patrimonioDTO = this.patrimonioService.salvar(new PatrimonioDTO(null, NOME_PATRIMONIO, DES_PATRIMONIO, ID, DES_PATRIMONIO));
+        assertEquals(NUMERO_TOMBO, patrimonioDTO.getNumeroTombo());
+        assertEquals(NOME_PATRIMONIO, patrimonioDTO.getNome());
+        assertEquals(DES_PATRIMONIO, patrimonioDTO.getDescricao());
+    }
+
+    @Test
+    public void alterar() {
         PatrimonioDTO patrimonioDTO = this.patrimonioService.salvar(new PatrimonioDTO(NUMERO_TOMBO, NOME_PATRIMONIO, DES_PATRIMONIO, ID, DES_PATRIMONIO));
         assertEquals(NUMERO_TOMBO, patrimonioDTO.getNumeroTombo());
         assertEquals(NOME_PATRIMONIO, patrimonioDTO.getNome());
         assertEquals(DES_PATRIMONIO, patrimonioDTO.getDescricao());
+    }
+
+    @Test (expected = CamposInvalidosException.class)
+    public void alterarNumeroTomboModificado() {
+        when(this.patrimonioRepository.findById(anyString())).thenReturn(Optional.ofNullable(null));
+        this.patrimonioService.salvar(new PatrimonioDTO(NUMERO_TOMBO, NOME_PATRIMONIO, DES_PATRIMONIO, ID, DES_PATRIMONIO));
     }
 
     @Test

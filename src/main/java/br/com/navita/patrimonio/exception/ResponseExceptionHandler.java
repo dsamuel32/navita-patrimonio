@@ -47,6 +47,13 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(detalheErro, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CamposInvalidosException.class)
+    public ResponseEntity<DetalheErroDTO> handleUserNotFoundException(CamposInvalidosException  ex, WebRequest request){
+        DetalheErroDTO detalheErro = new DetalheErroDTO(LocalDateTime.now(), ex.getErros());
+        LOGGER.severe(ex.getMessage());
+        return new ResponseEntity(detalheErro, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 
