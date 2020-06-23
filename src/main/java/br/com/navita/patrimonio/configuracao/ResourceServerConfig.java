@@ -22,6 +22,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
 
+    @Value("${security.url.registro.usuario}")
+    private String urlRegistroUsuario;
+
+    @Value("${security.url.swagger}")
+    private String urlSwagger;
+
+    @Value("${security.url.protegida}")
+    private String urlProtegidas;
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(resourceIds).tokenServices(tokenServices);
@@ -32,9 +41,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.requestMatchers()
             .and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/v1/usuarios").permitAll()
-            .antMatchers("/swagger-ui.html").permitAll()
-            .antMatchers("/v1/**" ).authenticated();
+            .antMatchers(HttpMethod.POST,urlRegistroUsuario).permitAll()
+            .antMatchers(urlSwagger).permitAll()
+            .antMatchers(urlProtegidas).authenticated();
     }
 
 }

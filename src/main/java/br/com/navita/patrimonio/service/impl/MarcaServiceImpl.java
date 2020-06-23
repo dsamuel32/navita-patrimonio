@@ -44,7 +44,7 @@ public class MarcaServiceImpl implements MarcaService {
         } catch (TransactionSystemException e) {
             throw new CamposInvalidosException(e);
         } catch (DataIntegrityViolationException e) {
-            throw new ObjetoDublicadoException("Já existe um registro com o nome " + marcaDTO.getNome());
+            throw new ObjetoDublicadoException("Já existe uma marca com o nome " + marcaDTO.getNome());
         }
 
     }
