@@ -136,4 +136,10 @@ public class PatrimonioServiceImplTest {
         assertEquals("Patrimonio apagado com sucesso.", respostaDTO.getMensagem());
     }
 
+    @Test(expected = NenhumResultadoEncontrado.class)
+    public void apagarNenhumResultadoEncontrado() {
+        doThrow(NenhumResultadoEncontrado.class).when(this.patrimonioRepository).deleteById(anyString());
+        this.patrimonioService.apagar(NUMERO_TOMBO);
+    }
+
 }

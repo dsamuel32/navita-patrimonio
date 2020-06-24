@@ -13,6 +13,7 @@ import br.com.navita.patrimonio.repository.PatrimonioRepository;
 import br.com.navita.patrimonio.service.PatrimonioService;
 import br.com.navita.patrimonio.validacao.Validacao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -85,8 +86,13 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
     @Override
     public RespostaDTO apagar(String numeroTombo) {
-        this.patrimonioRepository.deleteById(numeroTombo);
-        return new RespostaDTO("Patrimonio apagado com sucesso.");
+        try {
+            this.patrimonioRepository.deleteById(numeroTombo);
+            return new RespostaDTO("Patrimonio apagado com sucesso.");
+        } catch (EmptyResultDataAccessException e) {
+            throw new NenhumResultadoEncontrado("Nenhum resultado encontrado para exclusão");
+        }
+
     }
 
 }

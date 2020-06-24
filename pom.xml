@@ -153,6 +153,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>br.com.navita.patrimonio.App</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

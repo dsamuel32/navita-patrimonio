@@ -26,6 +26,10 @@ docker-compose up
 mvn clean package
 ```
 
+```
+java -jar target/app.jar
+```
+
 - Endpoint de autentição
 ```
 curl -X POST -vu testjwtclientid:XY7kmzoNzl100  http://localhost:8080/patrimonio/api/oauth/token  -H "Accept: application/json" -d grant_type=password -d username=teste@teste.com -d password=123

@@ -1,9 +1,0 @@
-version: '3.4'
-services:
-
-  patrimonio-service:
-    container_name: patrimonio-service
-    build: .
-    ports:
-      - "8080:8080"
-    network_mode: "navita"

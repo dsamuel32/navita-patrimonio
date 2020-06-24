@@ -139,4 +139,10 @@ public class MarcaServiceImplTest {
         doThrow(DataIntegrityViolationException.class).when(this.marcaRepository).deleteById(anyLong());
         this.marcaService.apagar(1L);
     }
+
+    @Test(expected = NenhumResultadoEncontrado.class)
+    public void apagarNenhumResultadoEncontrado() {
+        doThrow(NenhumResultadoEncontrado.class).when(this.marcaRepository).deleteById(anyLong());
+        this.marcaService.apagar(1L);
+    }
 }

@@ -14,6 +14,7 @@ import br.com.navita.patrimonio.service.MarcaService;
 import br.com.navita.patrimonio.validacao.Validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -71,6 +72,8 @@ public class MarcaServiceImpl implements MarcaService {
             return new RespostaDTO("Marca apagada com sucesso.");
         } catch (DataIntegrityViolationException e) {
             throw new RegistroNaoPodeSerApagadoException("A marca não pode ser apagada");
+        } catch (EmptyResultDataAccessException e) {
+            throw new NenhumResultadoEncontrado("Nenhum resultado encontrado para exclusão");
         }
 
     }
