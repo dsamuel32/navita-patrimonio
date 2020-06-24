@@ -111,6 +111,11 @@ public class PatrimonioServiceImplTest {
         assertEquals(DES_PATRIMONIO, patrimonioDTO.getDescricao());
     }
 
+    @Test(expected = CamposInvalidosException.class)
+    public void salvarComCamposInvalidos() {
+        this.patrimonioService.salvar(new PatrimonioDTO(null, NOME_PATRIMONIO, DES_PATRIMONIO, null, null));
+    }
+
     @Test
     public void alterar() {
         PatrimonioDTO patrimonioDTO = this.patrimonioService.salvar(new PatrimonioDTO(NUMERO_TOMBO, NOME_PATRIMONIO, DES_PATRIMONIO, ID, DES_PATRIMONIO));

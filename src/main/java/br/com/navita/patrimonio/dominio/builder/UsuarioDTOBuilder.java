@@ -35,6 +35,11 @@ public class UsuarioDTOBuilder {
         return this;
     }
 
+    public UsuarioDTOBuilder senha(String senha) {
+        this.usuarioDTO.setSenha(senha);
+        return this;
+    }
+
     public UsuarioDTOBuilder permissoes(Set<Permissao> permisoes) {
         permisoes.forEach(it -> this.permissoes.add(new PermissaoDTO(it.getId(), it.getDescricao())));
         this.usuarioDTO.setPermissoes(this.permissoes);

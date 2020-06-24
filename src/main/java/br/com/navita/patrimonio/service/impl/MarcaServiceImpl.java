@@ -11,6 +11,7 @@ import br.com.navita.patrimonio.exception.ObjetoDublicadoException;
 import br.com.navita.patrimonio.exception.RegistroNaoPodeSerApagadoException;
 import br.com.navita.patrimonio.repository.MarcaRepository;
 import br.com.navita.patrimonio.service.MarcaService;
+import br.com.navita.patrimonio.validacao.Validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -37,16 +38,30 @@ public class MarcaServiceImpl implements MarcaService {
 
     @Override
     public MarcaDTO salvar(MarcaDTO marcaDTO) {
+        Validacao.newInstance().campoPreenchido("nome", marcaDTO.getNome()).validar();
         Marca marca = new Marca(marcaDTO.getId(), marcaDTO.getNome());
+        return salvar(marca);
+    }
+
+    @Override
+    public MarcaDTO alterar(MarcaDTO marcaDTO) {
+        Validacao.newInstance()
+                 .campoPreenchido("id", marcaDTO.getId())
+                 .campoPreenchido("nome", marcaDTO.getNome())
+                 .validar();
+        Marca marca = new Marca(marcaDTO.getId(), marcaDTO.getNome());
+        return salvar(marca);
+    }
+
+    private MarcaDTO salvar(Marca marca) {
         try {
-            marca = this.marcaRepository.save(marca);
-            return new MarcaDTO(marca.getId(), marca.getNome());
+            Marca marcaSalva = this.marcaRepository.save(marca);
+            return new MarcaDTO(marcaSalva.getId(), marcaSalva.getNome());
         } catch (TransactionSystemException e) {
             throw new CamposInvalidosException(e);
         } catch (DataIntegrityViolationException e) {
-            throw new ObjetoDublicadoException("Já existe uma marca com o nome " + marcaDTO.getNome());
+            throw new ObjetoDublicadoException("Já existe uma marca com o nome " + marca.getNome());
         }
-
     }
 
     @Override

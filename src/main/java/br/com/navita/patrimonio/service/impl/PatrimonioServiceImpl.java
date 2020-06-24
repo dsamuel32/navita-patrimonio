@@ -11,6 +11,7 @@ import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
 import br.com.navita.patrimonio.repository.PatrimonioRepository;
 import br.com.navita.patrimonio.service.PatrimonioService;
+import br.com.navita.patrimonio.validacao.Validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,11 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
     @Override
     public PatrimonioDTO salvar(PatrimonioDTO patrimonioDTO) {
+
+        Validacao.newInstance().campoPreenchido("nome", patrimonioDTO.getNome())
+                               .campoPreenchido("descricao", patrimonioDTO.getDescricao())
+                               .campoPreenchido("marca", patrimonioDTO.getMarca().getId())
+                               .validar();
 
         if (this.isNumeroTomboAlterado(patrimonioDTO.getNumeroTombo())) {
             throw new CamposInvalidosException("O campo número do tombo não pode ser alterado");

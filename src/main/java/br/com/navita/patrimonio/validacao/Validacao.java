@@ -1,4 +1,4 @@
-package br.com.navita.patrimonio.Validacao;
+package br.com.navita.patrimonio.validacao;
 
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 

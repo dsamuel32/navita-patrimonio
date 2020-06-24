@@ -1,9 +1,7 @@
-package br.com.navita.patrimonio.Validacao;
+package br.com.navita.patrimonio.validacao;
 
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ValidacaoTest {
 

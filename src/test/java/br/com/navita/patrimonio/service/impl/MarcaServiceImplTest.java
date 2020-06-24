@@ -5,6 +5,7 @@ import br.com.navita.patrimonio.dominio.dto.MarcaDTO;
 import br.com.navita.patrimonio.dominio.dto.PaginacaoDTO;
 import br.com.navita.patrimonio.dominio.dto.RespostaDTO;
 import br.com.navita.patrimonio.dominio.entidade.Marca;
+import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
 import br.com.navita.patrimonio.exception.ObjetoDublicadoException;
 import br.com.navita.patrimonio.exception.RegistroNaoPodeSerApagadoException;
@@ -104,6 +105,19 @@ public class MarcaServiceImplTest {
     public void salvar() {
         when(this.marcaRepository.save(any(Marca.class))).thenReturn(this.marca);
         MarcaDTO marcaDTO = this.marcaService.salvar(new MarcaDTO(null, MARCA));
+        assertEquals(ID, marcaDTO.getId());
+        assertEquals(MARCA, marcaDTO.getNome());
+    }
+
+    @Test(expected = CamposInvalidosException.class)
+    public void salvarParametrosInvalidos() {
+        this.marcaService.salvar(new MarcaDTO(null, null));
+    }
+
+    @Test
+    public void alterar() {
+        when(this.marcaRepository.save(any(Marca.class))).thenReturn(this.marca);
+        MarcaDTO marcaDTO = this.marcaService.salvar(new MarcaDTO(ID, MARCA));
         assertEquals(ID, marcaDTO.getId());
         assertEquals(MARCA, marcaDTO.getNome());
     }

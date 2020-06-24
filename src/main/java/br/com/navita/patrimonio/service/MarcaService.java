@@ -10,6 +10,7 @@ public interface MarcaService {
     MarcaDTO recuperarPorId(Long id);
     PaginacaoDTO<MarcaDTO> recuperar(FiltroMarcaDTO filtroMarcaDTO);
     MarcaDTO salvar(MarcaDTO marcaDTO);
+    MarcaDTO alterar(MarcaDTO marcaDTO);
     RespostaDTO apagar(Long id);
 
 }

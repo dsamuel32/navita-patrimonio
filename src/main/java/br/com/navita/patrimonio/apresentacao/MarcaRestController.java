@@ -76,7 +76,7 @@ public class MarcaRestController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public MarcaDTO atualizar(@RequestBody MarcaDTO marcaDTO) {
-        return this.marcaService.salvar(marcaDTO);
+        return this.marcaService.alterar(marcaDTO);
     }
 
     @ApiOperation( value = "Apaga uma marca")

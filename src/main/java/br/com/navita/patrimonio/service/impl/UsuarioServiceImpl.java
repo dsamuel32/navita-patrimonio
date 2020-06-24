@@ -1,6 +1,6 @@
 package br.com.navita.patrimonio.service.impl;
 
-import br.com.navita.patrimonio.Validacao.Validacao;
+import br.com.navita.patrimonio.validacao.Validacao;
 import br.com.navita.patrimonio.dominio.builder.UsuarioBuilder;
 import br.com.navita.patrimonio.dominio.builder.UsuarioDTOBuilder;
 import br.com.navita.patrimonio.dominio.dto.*;

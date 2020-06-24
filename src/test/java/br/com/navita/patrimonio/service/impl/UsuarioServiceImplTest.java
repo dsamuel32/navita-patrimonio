@@ -4,6 +4,7 @@ import br.com.navita.patrimonio.dominio.builder.UsuarioDTOBuilder;
 import br.com.navita.patrimonio.dominio.dto.*;
 import br.com.navita.patrimonio.dominio.entidade.Permissao;
 import br.com.navita.patrimonio.dominio.entidade.Usuario;
+import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.ValidacaoSenhaException;
 import br.com.navita.patrimonio.repository.UsuarioRepository;
 import org.junit.Before;
@@ -113,9 +114,9 @@ public class UsuarioServiceImplTest {
     @Test
     public void salvar() {
         UsuarioDTO usuarioDTO = UsuarioDTOBuilder.getInstance()
-                                                 .id(ID)
                                                  .nome(NOME)
                                                  .email(EMAIL)
+                                                 .senha(SENHA)
                                                  .permissoes(new HashSet<>(Arrays.asList(new Permissao(ID, PERMISSAO))))
                                                  .build();
         UsuarioDTO usuarioDTOSalvo = this.usuarioService.salvar(usuarioDTO);
@@ -128,6 +129,31 @@ public class UsuarioServiceImplTest {
         });
 
     }
+
+    @Test
+    public void salvarSemInformarPermissoes() {
+        UsuarioDTO usuarioDTO = UsuarioDTOBuilder.getInstance()
+                                                 .nome(NOME)
+                                                 .email(EMAIL)
+                                                 .senha(SENHA)
+                                                 .build();
+        UsuarioDTO usuarioDTOSalvo = this.usuarioService.salvar(usuarioDTO);
+        assertEquals(ID, usuarioDTOSalvo.getId());
+        assertEquals(NOME, usuarioDTOSalvo.getNome());
+        assertEquals(EMAIL, usuarioDTOSalvo.getEmail());
+        usuarioDTOSalvo.getPermissoes().forEach(it -> {
+            assertEquals(ID, it.getId());
+            assertEquals(PERMISSAO, it.getDescricao());
+        });
+
+    }
+
+    @Test(expected = CamposInvalidosException.class)
+    public void salvarComCamposInvalidos() {
+        UsuarioDTO usuarioDTO = UsuarioDTOBuilder.getInstance().build();
+        this.usuarioService.salvar(usuarioDTO);
+    }
+
 
     @Test
     public void alterar() {
