@@ -25,12 +25,8 @@ public class UsuarioBuilder {
     public UsuarioBuilder usuarioDTO(UsuarioDTO usuarioDTO) {
         this.usuario.setId(usuarioDTO.getId());
         this.usuario.setNome(usuarioDTO.getNome());
+        this.usuario.setPassword(usuarioDTO.getSenha());
         this.usuario.setEmail(usuarioDTO.getEmail());
-        return this;
-    }
-
-    public UsuarioBuilder senha(String senha) {
-        this.usuario.setPassword(senha);
         return this;
     }
 

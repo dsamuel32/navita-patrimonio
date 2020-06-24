@@ -7,6 +7,7 @@ import br.com.navita.patrimonio.dominio.entidade.Usuario;
 import br.com.navita.patrimonio.exception.CamposInvalidosException;
 import br.com.navita.patrimonio.exception.NenhumResultadoEncontrado;
 import br.com.navita.patrimonio.exception.ObjetoDublicadoException;
+import br.com.navita.patrimonio.exception.ValidacaoSenhaException;
 import br.com.navita.patrimonio.repository.UsuarioRepository;
 import br.com.navita.patrimonio.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,20 +81,44 @@ public class UsuarioServiceImpl implements UsuarioService {
                                         .usuarioDTO(usuarioDTO)
                                         .permissoesDTO(usuarioDTO.getPermissoes())
                                         .build();
+        return this.salvar(usuario);
+    }
+
+    private UsuarioDTO salvar(Usuario usuario) {
         try {
-            usuario = this.usuarioRepository.save(usuario);
-            UsuarioDTO  usuarioDTOSalvo = UsuarioDTOBuilder.getInstance()
-                                                           .id(usuario.getId())
-                                                           .nome(usuario.getNome())
-                                                           .email(usuario.getEmail())
-                                                           .permissoes(usuario.getPermissoes())
-                                                           .build();
-            return usuarioDTOSalvo;
-        } catch (TransactionSystemException e) {
+            Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
+            UsuarioDTO  usuarioDTO = UsuarioDTOBuilder.getInstance()
+                                                      .id(usuarioSalvo.getId())
+                                                      .nome(usuarioSalvo.getNome())
+                                                      .email(usuarioSalvo.getEmail())
+                                                      .permissoes(usuarioSalvo.getPermissoes())
+                                                      .build();
+            return usuarioDTO;
+        } catch (TransactionSystemException | ConstraintViolationException e) {
             throw new CamposInvalidosException(e);
         } catch (DataIntegrityViolationException e) {
-            throw new ObjetoDublicadoException("Já existe um registro com o e-mail " + usuarioDTO.getEmail());
+            throw new ObjetoDublicadoException("Já existe um registro com o e-mail " + usuario.getEmail());
         }
+
+    }
+
+    @Override
+    public UsuarioDTO alterar(UsuarioDTO usuarioDTO) {
+        Usuario usuario = this.usuarioRepository.findById(usuarioDTO.getId()).orElseThrow(NenhumResultadoEncontrado::new);
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setNome(usuarioDTO.getNome());
+        return this.salvar(usuario);
+    }
+
+    @Override
+    public RespostaDTO alterarSenha(Long id, SenhaDTO senhaDTO) {
+        Usuario usuario = this.usuarioRepository.findById(id).orElseThrow(NenhumResultadoEncontrado::new);
+        if (usuario.getPassword().equals(senhaDTO.getSenhaAtual())) {
+            usuario.setPassword(senhaDTO.getNovaSenha());
+            this.salvar(usuario);
+            return new RespostaDTO("Senha alterada com sucesso");
+        }
+        throw new ValidacaoSenhaException();
     }
 
     @Override

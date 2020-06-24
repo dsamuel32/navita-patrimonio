@@ -54,6 +54,13 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(detalheErro, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ValidacaoSenhaException.class)
+    public ResponseEntity<DetalheErroDTO> handleUserNotFoundException(ValidacaoSenhaException  ex, WebRequest request){
+        DetalheErroDTO detalheErro = new DetalheErroDTO(LocalDateTime.now(), ex.getMessage());
+        LOGGER.severe(ex.getMessage());
+        return new ResponseEntity(detalheErro, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 

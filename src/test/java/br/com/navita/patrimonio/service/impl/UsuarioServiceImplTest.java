@@ -5,6 +5,7 @@ import br.com.navita.patrimonio.dominio.builder.UsuarioDTOBuilder;
 import br.com.navita.patrimonio.dominio.dto.*;
 import br.com.navita.patrimonio.dominio.entidade.Permissao;
 import br.com.navita.patrimonio.dominio.entidade.Usuario;
+import br.com.navita.patrimonio.exception.ValidacaoSenhaException;
 import br.com.navita.patrimonio.repository.UsuarioRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +54,7 @@ public class UsuarioServiceImplTest {
     private final String PERMISSAO = "ADM";
     private final String NOME = "TESTE";
     private final String EMAIL = "TESTE@TESTE.COM";
+    private final String SENHA = "123";
 
 
     @Before
@@ -62,6 +64,7 @@ public class UsuarioServiceImplTest {
         when(this.usuario.getId()).thenReturn(ID);
         when(this.usuario.getNome()).thenReturn(NOME);
         when(this.usuario.getEmail()).thenReturn(EMAIL);
+        when(this.usuario.getPassword()).thenReturn(SENHA);
         when(this.usuario.getPermissoes()).thenReturn(new HashSet<>(Arrays.asList(this.permissao)));
         when(this.pageable.getPageNumber()).thenReturn(0);
         when(this.page.getPageable()).thenReturn(this.pageable);
@@ -129,6 +132,40 @@ public class UsuarioServiceImplTest {
             assertEquals(PERMISSAO, it.getDescricao());
         });
 
+    }
+
+    @Test
+    public void alterar() {
+        UsuarioDTO usuarioDTO = UsuarioDTOBuilder.getInstance()
+                                                 .id(ID)
+                                                 .nome(NOME)
+                                                 .email(EMAIL)
+                                                 .build();
+        UsuarioDTO usuarioDTOSalvo = this.usuarioService.alterar(usuarioDTO);
+        assertEquals(ID, usuarioDTOSalvo.getId());
+        assertEquals(NOME, usuarioDTOSalvo.getNome());
+        assertEquals(EMAIL, usuarioDTOSalvo.getEmail());
+        usuarioDTOSalvo.getPermissoes().forEach(it -> {
+            assertEquals(ID, it.getId());
+            assertEquals(PERMISSAO, it.getDescricao());
+        });
+    }
+
+    @Test
+    public void alterarSenha() {
+        SenhaDTO senhaDTO = new SenhaDTO();
+        senhaDTO.setSenhaAtual(SENHA);
+        senhaDTO.setNovaSenha("123455");
+        RespostaDTO respostaDTO = this.usuarioService.alterarSenha(ID, senhaDTO);
+        assertEquals("Senha alterada com sucesso", respostaDTO.getMensagem());
+    }
+
+    @Test (expected = ValidacaoSenhaException.class)
+    public void alterarSenhaDiferentes() {
+        SenhaDTO senhaDTO = new SenhaDTO();
+        senhaDTO.setSenhaAtual("3434");
+        senhaDTO.setNovaSenha("123455");
+        this.usuarioService.alterarSenha(ID, senhaDTO);
     }
 
     @Test

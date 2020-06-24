@@ -8,6 +8,8 @@ public interface UsuarioService extends UserDetailsService {
     UsuarioDTO getUsuarioLogado();
     PaginacaoDTO<UsuarioDTO> recuperar(FiltroUsuarioDTO filtroUsuarioDTO);
     UsuarioDTO salvar(UsuarioDTO usuarioDTO);
+    UsuarioDTO alterar(UsuarioDTO usuarioDTO);
+    RespostaDTO alterarSenha(Long id, SenhaDTO senhaDTO);
     RespostaDTO desativar(Long id);
 
 }

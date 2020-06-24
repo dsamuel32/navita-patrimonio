@@ -73,7 +73,20 @@ public class UsuarioRestController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public UsuarioDTO atualizar(@RequestBody UsuarioDTO usuarioDTO) {
-        return this.usuarioService.salvar(usuarioDTO);
+        return this.usuarioService.alterar(usuarioDTO);
+    }
+
+    @ApiOperation( value = "Altera a senha dousuário")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "Retorna que a senha foi alterada com sucesso"),
+            @ApiResponse(code = 400, message = "Requisição Inválida"),
+            @ApiResponse(code = 401, message = "Usuário não autenticado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção")
+    })
+    @PutMapping("{id}/senha")
+    @ResponseStatus(HttpStatus.OK)
+    public RespostaDTO atualizar(@PathVariable("id")Long id, @RequestBody SenhaDTO senhaDTO) {
+        return this.usuarioService.alterarSenha(id, senhaDTO);
     }
 
     @ApiOperation( value = "Desativa um usuário")
