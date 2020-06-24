@@ -4,7 +4,6 @@ import br.com.navita.patrimonio.dominio.dto.PermissaoDTO;
 import br.com.navita.patrimonio.dominio.dto.UsuarioDTO;
 import br.com.navita.patrimonio.dominio.entidade.Permissao;
 import br.com.navita.patrimonio.dominio.entidade.Usuario;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class UsuarioBuilderTest {
 
     @Test
     public void build() {
-        Usuario usuario = UsuarioBuilder.getInstance()
+        Usuario usuario = UsuarioBuilder.newnstance()
                                         .permissoesDTO(this.permissoes)
                                         .usuarioDTO(this.usuarioDTO)
                                         .build();

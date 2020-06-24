@@ -1,5 +1,6 @@
 package br.com.navita.patrimonio.service.impl;
 
+import br.com.navita.patrimonio.Validacao.Validacao;
 import br.com.navita.patrimonio.dominio.builder.UsuarioBuilder;
 import br.com.navita.patrimonio.dominio.builder.UsuarioDTOBuilder;
 import br.com.navita.patrimonio.dominio.dto.*;
@@ -24,6 +25,7 @@ import org.springframework.transaction.TransactionSystemException;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -77,12 +79,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
-        Usuario usuario = UsuarioBuilder.getInstance()
-                                        .usuarioDTO(usuarioDTO)
-                                        .permissoesDTO(usuarioDTO.getPermissoes())
-                                        .build();
+        Validacao.newInstance()
+                 .campoPreenchido("nome", usuarioDTO.getNome())
+                 .campoPreenchido("email", usuarioDTO.getEmail())
+                 .campoPreenchido("senha", usuarioDTO.getSenha())
+                 .validar();
+
+        UsuarioBuilder builder = UsuarioBuilder.newnstance()
+                                               .usuarioDTO(usuarioDTO)
+                                               .permissoesDTO(usuarioDTO.getPermissoes());
+
+        if (!this.isExistePermissoes(usuarioDTO.getPermissoes())) {
+            builder.permissao(1L);
+        }
+
+        Usuario usuario = builder.build();
+
         return this.salvar(usuario);
     }
+
+    private Boolean isExistePermissoes(Set<PermissaoDTO> permissaoDTOS) {
+        return permissaoDTOS != null && !permissaoDTOS.isEmpty();
+    }
+
 
     private UsuarioDTO salvar(Usuario usuario) {
         try {
@@ -104,6 +123,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO alterar(UsuarioDTO usuarioDTO) {
+        Validacao.newInstance()
+                 .campoPreenchido("id", usuarioDTO.getId())
+                 .campoPreenchido("email", usuarioDTO.getEmail())
+                 .campoPreenchido("nome", usuarioDTO.getNome())
+                 .validar();
         Usuario usuario = this.usuarioRepository.findById(usuarioDTO.getId()).orElseThrow(NenhumResultadoEncontrado::new);
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setNome(usuarioDTO.getNome());
@@ -112,6 +136,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public RespostaDTO alterarSenha(Long id, SenhaDTO senhaDTO) {
+        Validacao.newInstance()
+                 .campoPreenchido("id", id)
+                 .campoPreenchido("senha atual", senhaDTO.getSenhaAtual())
+                 .campoPreenchido("nova senha", senhaDTO.getNovaSenha())
+                 .validar();
         Usuario usuario = this.usuarioRepository.findById(id).orElseThrow(NenhumResultadoEncontrado::new);
         if (usuario.getPassword().equals(senhaDTO.getSenhaAtual())) {
             usuario.setPassword(senhaDTO.getNovaSenha());

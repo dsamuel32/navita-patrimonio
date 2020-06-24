@@ -18,7 +18,7 @@ public class UsuarioBuilder {
         this.permissoes = new HashSet<>();
     }
 
-    public static UsuarioBuilder getInstance() {
+    public static UsuarioBuilder newnstance() {
         return new UsuarioBuilder();
     }
 
@@ -30,9 +30,17 @@ public class UsuarioBuilder {
         return this;
     }
 
-    public UsuarioBuilder permissoesDTO(Set<PermissaoDTO> permissoes) {
-        permissoes.forEach(it -> this.permissoes.add(new Permissao(it.getId(), it.getDescricao())));
+    public UsuarioBuilder permissao(Long id) {
+        this.permissoes.add(new Permissao(id, null));
         this.usuario.setPermissoes(this.permissoes);
+        return this;
+    }
+
+    public UsuarioBuilder permissoesDTO(Set<PermissaoDTO> permissoes) {
+        if (permissoes != null) {
+            permissoes.forEach(it -> this.permissoes.add(new Permissao(it.getId(), it.getDescricao())));
+            this.usuario.setPermissoes(this.permissoes);
+        }
         return this;
     }
 

@@ -1,33 +1,28 @@
 package br.com.navita.patrimonio.service.impl;
 
-import br.com.navita.patrimonio.dominio.builder.UsuarioBuilder;
 import br.com.navita.patrimonio.dominio.builder.UsuarioDTOBuilder;
 import br.com.navita.patrimonio.dominio.dto.*;
 import br.com.navita.patrimonio.dominio.entidade.Permissao;
 import br.com.navita.patrimonio.dominio.entidade.Usuario;
 import br.com.navita.patrimonio.exception.ValidacaoSenhaException;
 import br.com.navita.patrimonio.repository.UsuarioRepository;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsuarioServiceImplTest {
