@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(
         value = Paths.USUARIOS,
-        description = "Patrimônios",
+        description = "Usuários",
         consumes="application/json",
         produces="application/json"
 )
