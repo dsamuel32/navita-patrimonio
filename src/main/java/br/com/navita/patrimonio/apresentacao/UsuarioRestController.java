@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = Paths.USUARIOS, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioRestController {
-
+   
+    
+    
     @Autowired
     private UsuarioService usuarioService;
 
