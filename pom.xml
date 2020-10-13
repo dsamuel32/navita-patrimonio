@@ -19,7 +19,7 @@
 		<springfox.version>2.9.2</springfox.version>
 		<modelmapper.version>1.1.0</modelmapper.version>
 		<undertow.version>2.0.19.Final</undertow.version>
-		<junit.version>4.13</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<powermock.version>1.6.4</powermock.version>
 		<mockito.version>3.3.3</mockito.version>
 		<dockerfile.version>1.4.3</dockerfile.version>
