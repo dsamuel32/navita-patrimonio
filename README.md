@@ -1,4 +1,4 @@
-# Teste Navita Controle de Patrimônio
+# Controle de Patrimônio
 
 #### Tecnologias Utilizadas
 - Spring Boot
